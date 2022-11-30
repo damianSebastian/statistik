@@ -22,12 +22,14 @@ function ShowBar({identifier}) {
   
     useEffect(()=> {
       loadData();
+      updateLifts();
     },[])
   
     function loadData() {
       if(JSON.parse(localStorage.getItem(identifier)) !== null) {
         records = JSON.parse(localStorage.getItem(identifier));
         setId(JSON.parse(localStorage.getItem('id'+identifier)));
+        
         console.log('apelare din useEffect ' + identifier);
         resetDates();
       }
@@ -44,22 +46,29 @@ function ShowBar({identifier}) {
         id:id,
         record: new Date(),
       })
+      updateLifts();
       setId(id+1);
       saveData();
     }
   
     function saveData() {
       localStorage.setItem(identifier,JSON.stringify(records));
-      localStorage.setItem('id'+identifier,id);
+      localStorage.setItem('id'+identifier,id+1);
     }
-    function get() {   
-      console.log(records);   
+    function get() {
+      console.log(records);
     }
-  
     function deletRecords() {
       localStorage.clear();
       records = [];
       setId(0);
+      updateLifts();
+    }
+    function updateLifts() {
+      lastPeriod(7,setInWeek);
+      lastPeriod(30,setInMonth);
+      lastPeriod(180, setIn6Months);
+      lastPeriod(365, setInYear);
     }
     
     function lastPeriod(n, setValue) {
@@ -78,23 +87,20 @@ function ShowBar({identifier}) {
   
     return (
       <div id={identifier} className="container">
+        <p className='statusText'>{identifier}</p>
         <div className='listerContainer'>
-          <Lister function={()=> lastPeriod(7,setInWeek)} buttDescription={'Get last week'}
-          level={inWeek} maxLevel={7}/>
-          <Lister function={()=> lastPeriod(30,setInMonth)} buttDescription={'Get last month'}
-          level={inMonth} maxLevel={30}/>
-          <Lister function ={() => lastPeriod(180,setIn6Months)} buttDescription={'Get last 6 months'}
-          level={in6Months} maxLevel={180}/>
-          <Lister function ={() => lastPeriod(360,setInYear)} buttDescription={'Get last year'}
-          level={inYear} maxLevel={365}/>
+          <Lister level={inWeek} maxLevel={7}/>
+          <Lister level={inMonth} maxLevel={30}/>
+          <Lister level={in6Months} maxLevel={180}/>
+          <Lister level={inYear} maxLevel={365}/>
         </div>
         <div className='buttonContainer'>
-          <Button function={()=> inputRecord()} description={'Take a record'}/>
+          <Button function={()=> {
+            inputRecord();
+          get();}}
+          description={'Take a record'}/>
           <Button function={() => deletRecords()} description={'Delete records'}/>
-
-
-        </div>
-        
+        </div>      
       </div>
     );
 }

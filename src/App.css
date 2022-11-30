@@ -3,6 +3,7 @@
   --button-main:rgb(110, 237,237);
   --button-shadow:rgba(65, 243, 243, 0.7);
   --button-second-color:rgb(44,157,157);
+  --fullLift:rgb(48, 48, 48);
 }
 .app {
   display: flex;
@@ -23,18 +24,24 @@
 .lift {
   width: 100px;
   background-color: var(--button-second-color);
-  border: 0.25em solid var(--button-main);
-  border-radius: 1em;
+  
+  border-radius: 1rem;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+
 }
 .fullLift {
     width: 100px;
-    background-color: red;
-    border: 0.25em solid var(--button-main);
+    background-color: var(--fullLift);  
     border-radius: 1em;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-start;
     align-items: center;
+    box-shadow: 0 0 0.5em 0.1em var(--button-main),
+      0 0 1em 0.25em var(--button-shadow);
     
 }
 .button {
@@ -97,4 +104,11 @@
   position: relative;
   top: 50px;
 
+}
+.statusText {
+  font-size: 2rem;
+  color: var(--button-main);
+  font-weight: bold;
+  text-shadow: 0 0 0.5em var(--button-shadow);
+  text-transform: capitalize;
 }

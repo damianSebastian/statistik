@@ -5,7 +5,8 @@ function App() {
 
   return (
     <div className="app">
-      <ShowBar identifier='Sport'/>
+      <ShowBar identifier={'Sport'}/>
+      <ShowBar identifier={"Dance"}/>
       
     </div>
   )
