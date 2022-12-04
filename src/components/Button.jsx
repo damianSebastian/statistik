@@ -2,11 +2,11 @@ import React from "react";
 
 import '../App.css';
 
-function Button(probs){
+function Button({func, description}){
     
     return(
         <>
-            <button className="button" onClick={probs.function}>{probs.description}</button>
+            <button className="button" onClick={func}>{description}</button>
         </>
 
     )

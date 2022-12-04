@@ -5,7 +5,8 @@
   --button-second-color:rgb(44,157,157);
   --fullLift:rgb(48, 48, 48);
 }
-.app {
+.app{
+  background-color: var(--main-color);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,7 +23,7 @@
   height: 100vh;
 }
 .lift {
-  width: 100px;
+  width: 8vw;
   background-color: var(--button-second-color);
   
   border-radius: 1rem;
@@ -31,7 +32,7 @@
 
 }
 .fullLift {
-    width: 100px;
+    width: 8vw;
     background-color: var(--fullLift);  
     border-radius: 1em;
     border-bottom-left-radius: 0;
@@ -48,7 +49,7 @@
   position: relative;
   padding: 1em 1em;
   color: var(--button-main);
-  font-size:15px;
+  font-size:1rem;
   font-weight: bold;
   text-transform: uppercase;
   text-shadow: 0 0 0.5em var(--button-main);
@@ -61,7 +62,8 @@
   outline: none;
   cursor: pointer;
   transition: all 0.3s;
-  margin-top: 1rem;
+  margin: 0.5rem;
+  
 }
 
 .button:hover {
@@ -89,20 +91,19 @@
   justify-content: space-between; 
   align-items: flex-end;
   width: 75%;
-  height: 150px;
-  padding-left: 5px;
-  padding-right: 5px;
+  min-height: 200px;
+  
 
 }
 .buttonContainer {
-  width: 25vw;
+  min-width: 35vw;
   height:50px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   position: relative;
-  top: 50px;
+  top: 25px;
 
 }
 .statusText {
@@ -111,4 +112,15 @@
   font-weight: bold;
   text-shadow: 0 0 0.5em var(--button-shadow);
   text-transform: capitalize;
+}
+.title{
+  font-size: 3rem;
+  margin: 0;
+}
+.menu {
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
