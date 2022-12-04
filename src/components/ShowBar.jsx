@@ -19,16 +19,17 @@ function ShowBar({identifier}) {
 
   useEffect(()=> {
     loadData();   
-  })
+  },[identifier]);
 
   function loadData() {
     if(JSON.parse(localStorage.getItem(identifier)) !== null) {
       records = JSON.parse(localStorage.getItem(identifier));     
       console.log('apelare din useEffect ' + identifier);
-      resetDates();
-      updateLifts();
-      console.log(records);
+      resetDates();     
+    } else {
+      records=[];
     }
+    updateLifts();
   }
   
   function resetDates() { 
@@ -41,7 +42,7 @@ function ShowBar({identifier}) {
     records.push(new Date());
     updateLifts();
     saveData();
-    get();
+    
   }
 
   function saveData() {
