@@ -1,9 +1,8 @@
 :root {
-  --main-color:rgb(25, 25, 25);
-  --button-main:rgb(110, 237,237);
-  --button-shadow:rgba(65, 243, 243, 0.7);
-  --button-second-color:rgb(44,157,157);
-  --fullLift:rgb(48, 48, 48);
+  --main-color:#ddd;
+  --second-color:#5f5f5f;
+  --accent:#f44336  ;
+  
 }
 .app{
   background-color: var(--main-color);
@@ -25,59 +24,54 @@
 }
 .lift {
   width: 8vw;
-  background-color: var(--button-second-color);
-  
-  border-radius: 1rem;
+  background-color: var(--accent);
+  border-radius: 10px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-
+  transition: height 1s ease;
 }
 .fullLift {
-    width: 8vw;
-    background-color: var(--fullLift);  
-    border-radius: 1em;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: flex-start;
-    align-items: center;
-    box-shadow: 0 0 0.5em 0.1em var(--button-main),
-      0 0 1em 0.25em var(--button-shadow);
-    
+  width: 8vw;
+  background-color: var(--second-color);
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  align-items: center;
+}
+.highlight {
+  color:green !important;
+  font-weight: 900;
+  text-decoration: underline;
+  background-color: #f44336;
 }
 .button {
   min-width:150px;
   position: relative;
-  padding: 1em 1em;
-  color: var(--button-main);
+  padding: 0.5em 0.5em;
+  color: var(--second-color);
   font-size:1rem;
-  font-weight: bold;
+  font-weight: 700;
   text-transform: uppercase;
-  text-shadow: 0 0 0.5em var(--button-main);
-  background-color: var(--button-second-color);
-  border: 0.25em solid var(--button-main);
-  border-radius: 1em;
-  box-shadow: 0 0 1em 0.25em var(--button-main),
-    0 0 1em 1em var(--button-shadow);
+  background-color: var(--main-color);
+  border: 0.25em solid var(--second-color);
+  border-radius: 1em; 
   outline: none;
   cursor: pointer;
-  transition: all 0.3s;
-  margin: 2.5rem;
+  transition: all 0.5s;
+  margin: 1.5rem;
   
+}
+.button:hover {
+  border: 0.25em solid var(--accent);
+  border-radius: 1em;
+  background-color: var(--main-color);
+  color: var(--accent);
 }
 
-.button:hover {
-  color: var(--button-second-color);
-  background-color: var(--button-main);
-  box-shadow: 0 0 1em 0.25em var(--button-main), 0 0 4em 2em var(--button-shadow), inset 0 0 0.75em 0.25em var(--button-main);
-  
-}
-.button:active{
-  box-shadow: 0 0 0.6em 0.25 var(--button-main),
-    0 0 2.5em 2em var(--button-shadow), 
-    inset 0 0 0.5em 0.25em var(--button-main);
-}
 .lister {
   min-width: 150px;
   display: flex;
@@ -109,55 +103,70 @@
 }
 .statusText {
   font-size: 2rem;
-  color: var(--button-main);
+  color: var(--accent);
   font-weight: bold;
-  text-shadow: 0 0 0.5em var(--button-shadow);
+  
   text-transform: capitalize;
 }
 .title{
   font-size: 3rem;
   margin: 0;
 }
-.menu {
+p {
+  font-size: 18px;
+  color: var(--accent);
+}
+input {
+  width: 100%;
+  height: 30px;
+  color: var(--second-color);
+  background-color: var(--main-color);
+  border-color: var(--accent);
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.inputContainer {
+  width:200px;
+  margin-top: 20px;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  
+}
+::-webkit-scrollbar-track {
+  background: var(--main-color) ;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent); 
+}
+.detailButton {
+  margin: 5px;
+}
+.side-menu {
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   width: 400px;
-  min-width:250;
-  overflow-x: hidden;           
+  
+  overflow-x: hidden;   
+  background-color: var(--second-color);   
+  transition: 0.5s;     
 }
-p {
-  font-size: 18px;
-  color: var(--button-main);
-}
-input {
-  width: 100%;
-  height: 30px;
-  color: var(--button-main);
-  background-color: var(--main-color);
-  border-color: var(--button-main);
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-}
-input:focus{
-  border-color: var(--button-main);
-  box-shadow: 0 0 1em 0.25em var(--button-main),
-    0 0 1em 1em var(--button-shadow);
-}
-.inputContainer {
-  width: 15vw;
-  margin-top: 20px;
-}
-::-webkit-scrollbar {
-  width: 10px;
-  height:50px;
-}
-::-webkit-scrollbar-track {
-  background: var(--main-color) ;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--button-main); 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,9 +1,8 @@
-
-import ShowBar from "./components/ShowBar";
-import './App.css';
+import '../App.css';
 import { useState } from "react";
-import Button from "./components/Button";
-import Input from "./components/InputText";
+import Button from "../components/Button";
+import Input from "../components/InputText";
+import ProgressBarsScreen from '../components/ProgressBarsScreen';
 
 let records=[];
 const recordsKey = 'records';
@@ -21,12 +20,17 @@ function App() {
   const [delValue, setDelValue] = useState('');
 
   function addCategory(input) {
-    records.push(input);
-    localStorage.setItem(recordsKey, records);
-    setInputValue('');
-    
+    if(input !=='') {
+
+      records.push(input);
+      localStorage.setItem(recordsKey, records);
+      setInputValue('');
+    } else {
+      alert('Introduceti o valoare');
+    }
     
   }
+
   function deleteCategory(input) {
     let temp = records.findIndex(el => el === input);
     if(temp !== -1)  {
@@ -42,14 +46,15 @@ function App() {
 
   return (
     <div className="app">
-      <div className="menu" >      
-        <Input description={'Add category'} onChange={e => setInputValue(e.target.value)} value={inputValue}/>        
-        <Button description={'Add category'} func={() => addCategory(inputValue)}/>
-        <Input description={'Delete category'} onChange={e => setDelValue(e.target.value)} value={delValue}/>
-        <Button description={'Delete category'} func={()=> deleteCategory(delValue)}/>
-        {records.map(el => <Button key={el} func={()=> setIdentifier(el)} description={el}/>)}             
+    
+      <div className='side-menu'>        
+          <Input description={'Add category'} onChange={e => setInputValue(e.target.value)} value={inputValue}/>        
+          <Button description={'Add category'} func={() => addCategory(inputValue)}/>
+          <Input description={'Delete category'} onChange={e => setDelValue(e.target.value)} value={delValue}/>
+          <Button description={'Delete category'} func={()=> deleteCategory(delValue)}/>
+          {records.map(el => <Button key={el} func={()=> setIdentifier(el)} description={el}/>)}    
       </div>     
-      <ShowBar 
+      <ProgressBarsScreen 
     identifier={identifier} 
     />    
     </div>

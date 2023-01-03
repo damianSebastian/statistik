@@ -1,5 +1,6 @@
 import { useEffect, useState} from 'react';
-
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import Lister from './Lister';
 import Button from './Button';
 import '../App.css';
@@ -10,28 +11,39 @@ function getDaysAgo(n) {
   return changedDate;
 }
 let records = [];
-function ShowBar({identifier}) {
+
+function ProgressBarsScreen({identifier}) {
     
   const [inWeek, setInWeek] = useState(0);
   const [inMonth, setInMonth] = useState(0);
   const [in6Months, setIn6Months] = useState(0);
   const [inYear, setInYear] = useState(0);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [markedDates, setMarkedDates] = useState([]);
 
   useEffect(()=> {
     loadData();   
-  },[identifier]);
+  });
 
   function loadData() {
     if(JSON.parse(localStorage.getItem(identifier)) !== null) {
+      console.log(localStorage.getItem(identifier));
       records = JSON.parse(localStorage.getItem(identifier));     
       console.log('apelare din useEffect ' + identifier);
-      resetDates();     
+      getMarkedDates(records);
+      resetDates();      
     } else {
       records=[];
     }
     updateLifts();
   }
-  
+  function getMarkedDates(input) {
+    let temp =[];
+    for(let i = 0; i <input.length;i++) {
+      temp.push(new Date(input[i]));
+    }
+    setMarkedDates(temp);
+  }
   function resetDates() { 
       for(let i = 0; i<records.length; i++) {
         records[i] = new Date(records[i]);
@@ -47,10 +59,6 @@ function ShowBar({identifier}) {
 
   function saveData() {
     localStorage.setItem(identifier,JSON.stringify(records));
-  }
-
-  function get() {
-    console.log(records);
   }
 
   function deletRecords() {
@@ -77,10 +85,19 @@ function ShowBar({identifier}) {
     }
     setValue(result);   
   }
-  
 
   return (
     <div  className="container">
+      <Button description={'Toggle Calendar'} func={() => setShowCalendar(!showCalendar)}/>
+      {showCalendar && <Calendar  value={new Date()} 
+        tileClassName={({date,view}) => {
+          for(let i=0; i<markedDates.length; i++){
+            if(markedDates[i].getDate() === date.getDate() &&markedDates[i].getMonth()===date.getMonth() && markedDates[i].getFullYear() ===date.getFullYear()) {
+              return 'highlight';
+            }
+          }
+        }}
+      />}
       <p className='statusText title'>{identifier}</p>
       <div className='listerContainer'>
         <Lister level={inWeek} maxLevel={7}/>
@@ -96,4 +113,5 @@ function ShowBar({identifier}) {
     </div>
   );
 }
-export default ShowBar;
+
+export default ProgressBarsScreen;
