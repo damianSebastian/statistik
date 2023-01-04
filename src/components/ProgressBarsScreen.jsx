@@ -75,7 +75,13 @@ function ProgressBarsScreen({identifier}) {
     }
     setValue(result);   
   }
-
+  function deleteSpecificDay(input) {
+    let newRec = records.filter((record) => (record.getDate() !== input.getDate() || record.getMonth()!==input.getMonth() || record.getFullYear() !==input.getFullYear()));
+    records = newRec;
+    saveData();
+    updateLifts();
+  }
+  
   function handleDayPressed(input) {
     let temp = false;
     for(let i=0; i<records.length; i++){
@@ -85,7 +91,11 @@ function ProgressBarsScreen({identifier}) {
       }
     }
     if(temp) {
-      alert('This day is already marked');
+      const confirm = window.confirm('Are you sure you want to delete this day?');
+      if(confirm) {
+        
+        deleteSpecificDay(input);
+      }
     } else {
       const confirm = window.confirm('Are you sure you want to add this day?');
       if (confirm) {
