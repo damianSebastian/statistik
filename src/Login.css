@@ -36,15 +36,6 @@
     margin: 10px 0;
   }
   
-  .login-form input {
-    width: 95%;
-    padding: 10px;
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
-  
   .login-form button {
     width: 100%;
     padding: 10px;

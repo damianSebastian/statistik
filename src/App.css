@@ -12,15 +12,22 @@
   align-items: center;
   height: 100vh;
 }
-.container {
+.progressBars {
   background-color: var(--main-color);
   display: flex;
+  flex: 7;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative; 
-  width: 100%;
   height: 100vh;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 .lift {
   width: 8vw;
@@ -43,10 +50,11 @@
   align-items: center;
 }
 .highlight {
-  color:green !important;
+  color:#ddd !important;
   font-weight: 900;
   text-decoration: underline;
-  background-color: #f44336;
+  background-color: var(--accent) !important;
+  border-radius: 50%;
 }
 .button {
   min-width:150px;
@@ -117,14 +125,12 @@ p {
   color: var(--accent);
 }
 input {
-  width: 100%;
-  height: 30px;
-  color: var(--second-color);
-  background-color: var(--main-color);
-  border-color: var(--accent);
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
+  width: 95%;
+  padding: 10px;
+  border: 1px solid var(--second-color);
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .inputContainer {
@@ -155,6 +161,14 @@ input {
   overflow-x: hidden;   
   background-color: var(--second-color);   
   transition: 0.5s;     
+}
+.calendarContainer {
+  background-color: var(--main-color);
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative; 
 }
 
 

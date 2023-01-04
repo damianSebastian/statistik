@@ -56,7 +56,8 @@ function App() {
       </div>     
       <ProgressBarsScreen 
     identifier={identifier} 
-    />    
+    />
+        
     </div>
   )
 }

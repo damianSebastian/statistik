@@ -18,40 +18,30 @@ function ProgressBarsScreen({identifier}) {
   const [inMonth, setInMonth] = useState(0);
   const [in6Months, setIn6Months] = useState(0);
   const [inYear, setInYear] = useState(0);
-  const [showCalendar, setShowCalendar] = useState(false);
-  const [markedDates, setMarkedDates] = useState([]);
 
   useEffect(()=> {
     loadData();   
-  });
+  },[identifier]);
 
   function loadData() {
-    if(JSON.parse(localStorage.getItem(identifier)) !== null) {
-      console.log(localStorage.getItem(identifier));
+    if(JSON.parse(localStorage.getItem(identifier)) !== null) {    
       records = JSON.parse(localStorage.getItem(identifier));     
       console.log('apelare din useEffect ' + identifier);
-      getMarkedDates(records);
       resetDates();      
     } else {
       records=[];
     }
     updateLifts();
   }
-  function getMarkedDates(input) {
-    let temp =[];
-    for(let i = 0; i <input.length;i++) {
-      temp.push(new Date(input[i]));
-    }
-    setMarkedDates(temp);
-  }
+
   function resetDates() { 
       for(let i = 0; i<records.length; i++) {
         records[i] = new Date(records[i]);
       }  
   }
 
-  function inputRecord() {
-    records.push(new Date());
+  function inputRecord(input) {
+    records.push(input);
     updateLifts();
     saveData();
     
@@ -86,30 +76,51 @@ function ProgressBarsScreen({identifier}) {
     setValue(result);   
   }
 
+  function handleDayPressed(input) {
+    let temp = false;
+    for(let i=0; i<records.length; i++){
+      if(records[i].getDate() === input.getDate() &&records[i].getMonth()===input.getMonth() && records[i].getFullYear() ===input.getFullYear()) {
+        temp = true;
+        break;
+      }
+    }
+    if(temp) {
+      alert('This day is already marked');
+    } else {
+      const confirm = window.confirm('Are you sure you want to add this day?');
+      if (confirm) {
+        inputRecord(input);
+      }
+
+    }
+  }
   return (
-    <div  className="container">
-      <Button description={'Toggle Calendar'} func={() => setShowCalendar(!showCalendar)}/>
-      {showCalendar && <Calendar  value={new Date()} 
-        tileClassName={({date,view}) => {
-          for(let i=0; i<markedDates.length; i++){
-            if(markedDates[i].getDate() === date.getDate() &&markedDates[i].getMonth()===date.getMonth() && markedDates[i].getFullYear() ===date.getFullYear()) {
+    <div className='container'>
+      <div  className="progressBars">
+        <p className='statusText title'>{identifier}</p>
+        <div className='listerContainer'>
+          <Lister level={inWeek} maxLevel={7}/>
+          <Lister level={inMonth} maxLevel={30}/>
+          <Lister level={in6Months} maxLevel={180}/>
+          <Lister level={inYear} maxLevel={365}/>
+        </div>
+        <div className='buttonContainer'>
+          <Button func={()=> inputRecord(new Date())}
+          description={'Take a record'}/>
+          <Button func={() => deletRecords()} description={'Delete records'}/>
+        </div>      
+      </div>
+      <Calendar  value={new Date()} 
+      onClickDay={(date) =>handleDayPressed(date) } 
+        tileClassName={({date}) => {
+          for(let i=0; i<records.length; i++){
+            if(records[i].getDate() === date.getDate() &&records[i].getMonth()===date.getMonth() && records[i].getFullYear() ===date.getFullYear()) {
               return 'highlight';
             }
           }
         }}
-      />}
-      <p className='statusText title'>{identifier}</p>
-      <div className='listerContainer'>
-        <Lister level={inWeek} maxLevel={7}/>
-        <Lister level={inMonth} maxLevel={30}/>
-        <Lister level={in6Months} maxLevel={180}/>
-        <Lister level={inYear} maxLevel={365}/>
-      </div>
-      <div className='buttonContainer'>
-        <Button func={()=> inputRecord()}
-        description={'Take a record'}/>
-        <Button func={() => deletRecords()} description={'Delete records'}/>
-      </div>      
+      />
+      
     </div>
   );
 }
