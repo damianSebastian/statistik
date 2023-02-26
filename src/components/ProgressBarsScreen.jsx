@@ -2,7 +2,8 @@ import { useEffect, useState} from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Lister from './Lister';
-import Button from './Button';
+import {Button} from '@mui/material';
+
 import '../App.css';
 
 function getDaysAgo(n) {
@@ -11,6 +12,7 @@ function getDaysAgo(n) {
   return changedDate;
 }
 let records = [];
+let recordsMap = new Map();
 
 function ProgressBarsScreen({identifier}) {
     
@@ -20,6 +22,7 @@ function ProgressBarsScreen({identifier}) {
   const [inYear, setInYear] = useState(0);
 
   useEffect(()=> {
+    recordsMap.clear();
     loadData();   
   },[identifier]);
 
@@ -53,14 +56,20 @@ function ProgressBarsScreen({identifier}) {
 
   function deletRecords() {
     records = [];
+    recordsMap.clear();
     saveData();
     updateLifts();
   }
   function updateLifts() {
+    resetMap();
     lastPeriod(7,setInWeek);
     lastPeriod(30,setInMonth);
     lastPeriod(180, setIn6Months);
     lastPeriod(365, setInYear);
+  }
+  function resetMap() {
+    records.forEach((r)=> recordsMap.set(r.toDateString(),true));
+    
   }
   
   function lastPeriod(n, setValue) {
@@ -78,22 +87,21 @@ function ProgressBarsScreen({identifier}) {
   function deleteSpecificDay(input) {
     let newRec = records.filter((record) => (record.getDate() !== input.getDate() || record.getMonth()!==input.getMonth() || record.getFullYear() !==input.getFullYear()));
     records = newRec;
+    recordsMap.clear();
     saveData();
     updateLifts();
   }
   
   function handleDayPressed(input) {
     let temp = false;
-    for(let i=0; i<records.length; i++){
-      if(records[i].getDate() === input.getDate() &&records[i].getMonth()===input.getMonth() && records[i].getFullYear() ===input.getFullYear()) {
-        temp = true;
-        break;
-      }
+    if(recordsMap.has(input.toDateString())) {
+      temp = true;
+      
     }
+    
     if(temp) {
       const confirm = window.confirm('Are you sure you want to delete this day?');
-      if(confirm) {
-        
+      if(confirm) {      
         deleteSpecificDay(input);
       }
     } else {
@@ -115,19 +123,17 @@ function ProgressBarsScreen({identifier}) {
           <Lister level={inYear} maxLevel={365}/>
         </div>
         <div className='buttonContainer'>
-          <Button func={()=> inputRecord(new Date())}
-          description={'Take a record'}/>
-          <Button func={() => deletRecords()} description={'Delete records'}/>
+          <Button variant="contained" onClick={()=> inputRecord(new Date())} color="success">Take a record</Button>
+          <Button variant='contained' onClick={() => deletRecords()} color="error">Delete records</Button>
         </div>      
       </div>
-      <Calendar  value={new Date()} 
+      <Calendar value={new Date()} 
       onClickDay={(date) =>handleDayPressed(date) } 
-        tileClassName={({date}) => {
-          for(let i=0; i<records.length; i++){
-            if(records[i].getDate() === date.getDate() &&records[i].getMonth()===date.getMonth() && records[i].getFullYear() ===date.getFullYear()) {
-              return 'highlight';
-            }
+      tileClassName={({date}) => {
+          if(recordsMap.has(date.toDateString())) {
+            return 'highlight';
           }
+          return '';
         }}
       />
       
@@ -136,3 +142,11 @@ function ProgressBarsScreen({identifier}) {
 }
 
 export default ProgressBarsScreen;
+
+// tileClassName={({date}) => {
+//   for(let i=0; i<records.length; i++){
+//     if(records[i].getDate() === date.getDate() &&records[i].getMonth()===date.getMonth() && records[i].getFullYear() ===date.getFullYear()) {
+//       return 'highlight';
+//     }
+//   }
+// }}

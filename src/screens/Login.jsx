@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { Button } from '@mui/material';
 import '../Login.css';
 
 function Login() {
@@ -34,7 +34,7 @@ function Login() {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        <button type="submit">Log In</button>
+        <Button variant='contained' type='submit'>Login</Button>
       </form>
     </div>
   );

@@ -6,23 +6,12 @@ export default function Menu () {
     return(  
         <>
             <nav className="menu">
-                <NavLink exact to="/" activeClassName="active">
+                <NavLink to="/" >
                 Home
                 </NavLink>
-                <NavLink to="/login" activeClassName="active">
+                <NavLink to="/login">
                 Login
                 </NavLink>
-                <NavLink to="/services" activeClassName="active">
-                Services
-                </NavLink>
-                <NavLink to="/portfolio" activeClassName="active">
-                Portfolio
-                </NavLink>
-                <NavLink to="/contact" activeClassName="active">
-                Contact
-                </NavLink>
-                
-                
             </nav>
             <Outlet/>
         </>     

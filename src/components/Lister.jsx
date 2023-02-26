@@ -5,7 +5,7 @@ export default function Lister(probs) {
     const curentLevel = (fullLevel*probs.level)/probs.maxLevel; 
     return(
         <div className="lister">        
-            <p className="statusText">{probs.level} / {probs.maxLevel}</p>
+            <p className="statusText">{probs.level}/{probs.maxLevel}</p>
             <div className="fullLift" style={{height: fullLevel}}>
                 <div style={{height:curentLevel}} className="lift">                   
                 </div>   
